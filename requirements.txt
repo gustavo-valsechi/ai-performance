@@ -1,0 +1,17 @@
+# Dependencies for the AI benchmark for financial analysis.
+# Install with: pip install -r requirements.txt
+
+# Data handling
+pandas>=2.1.0
+
+# AI clients
+# A single OpenAI-compatible SDK serves all three providers:
+#   - OpenAI (GPT)        -> official OpenAI endpoint
+#   - Gemini and DeepSeek -> OpenRouter endpoint (same SDK, custom base_url)
+openai>=1.40.0
+
+# Configuration via environment variables (.env)
+python-dotenv>=1.0.0
+
+# Readable progress bar in the terminal
+tqdm>=4.66.0

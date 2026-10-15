@@ -1,0 +1,25 @@
+# Secrets
+.env
+
+# Raw data (large CSVs from the Transparency Portal)
+data/*.csv
+data/*.CSV
+
+# Generated results
+results/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

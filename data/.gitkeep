@@ -1,0 +1,4 @@
+# Place the Transparency Portal CSVs here:
+#   expenses.csv  (Expense Execution)
+#   revenues.csv  (Revenue Execution)
+# This file only keeps the folder under version control.
