@@ -1,10 +1,6 @@
 # Secrets
 .env
 
-# Raw data (large CSVs from the Transparency Portal)
-data/*.csv
-data/*.CSV
-
 # Generated results
 results/
 *.log
