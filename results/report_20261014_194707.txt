@@ -1,0 +1,55 @@
+======================================================================
+AI PERFORMANCE REPORT - FINANCIAL ANALYSIS
+======================================================================
+Run window: 2026-10-14T19:47:07.647848  ->  2026-10-14T20:50:39.585999
+Runs per test: 20
+Providers tested: Gemini
+
+## OVERALL METRICS (per provider)
+
+Provider     Accuracy   Hallucin.    Quality    Latency       Cost/req
+----------------------------------------------------------------------
+Gemini         100.0%        0.0%      10.00      3.53s US$   0.001944
+
+## ACCURACY BY CATEGORY (%)
+
+Category                      Gemini
+------------------------------------
+By category                   100.0%
+Insights and decision         100.0%
+No answer in the data         100.0%
+Totals and periods            100.0%
+Trend and comparison          100.0%
+
+## HALLUCINATION RATE BY CATEGORY (%)
+
+Category                      Gemini
+------------------------------------
+By category                     0.0%
+Insights and decision           0.0%
+No answer in the data           0.0%
+Totals and periods              0.0%
+Trend and comparison            0.0%
+
+## BEST PER CRITERION
+
+  Highest accuracy ........ Gemini
+  Lowest hallucination .... Gemini
+  Best quality ............ Gemini
+  Lowest latency .......... Gemini
+  Lowest cost ............. Gemini
+
+## INSIGHTS AND DECISION
+
+Weighted score (accuracy 35%, hallucination 25%, quality 20%,
+latency 10%, cost 10%) - higher is better:
+
+  Gemini        0.0 / 100
+
+RECOMMENDED DECISION: Gemini
+  Rationale: best weighted score, with accuracy of 100.0%, hallucination of 0.0%, average quality 10.00, latency 3.53s and average cost of US$ 0.001944 per request.
+
+Note: the 'No answer in the data' category is the main
+reliability indicator - high hallucination there disqualifies an
+AI for financial analysis, where making up numbers is unacceptable.
+======================================================================

@@ -1,0 +1,55 @@
+======================================================================
+AI PERFORMANCE REPORT - FINANCIAL ANALYSIS
+======================================================================
+Run window: 2026-10-14T19:19:33.841491  ->  2026-10-14T20:19:11.380378
+Runs per test: 20
+Providers tested: DeepSeek
+
+## OVERALL METRICS (per provider)
+
+Provider     Accuracy   Hallucin.    Quality    Latency       Cost/req
+----------------------------------------------------------------------
+DeepSeek        92.0%        5.0%       9.41      2.94s US$   0.000344
+
+## ACCURACY BY CATEGORY (%)
+
+Category                    DeepSeek
+------------------------------------
+By category                   100.0%
+Insights and decision          75.0%
+No answer in the data         100.0%
+Totals and periods             88.8%
+Trend and comparison           96.2%
+
+## HALLUCINATION RATE BY CATEGORY (%)
+
+Category                    DeepSeek
+------------------------------------
+By category                     0.0%
+Insights and decision          25.0%
+No answer in the data           0.0%
+Totals and periods              0.0%
+Trend and comparison            0.0%
+
+## BEST PER CRITERION
+
+  Highest accuracy ........ DeepSeek
+  Lowest hallucination .... DeepSeek
+  Best quality ............ DeepSeek
+  Lowest latency .......... DeepSeek
+  Lowest cost ............. DeepSeek
+
+## INSIGHTS AND DECISION
+
+Weighted score (accuracy 35%, hallucination 25%, quality 20%,
+latency 10%, cost 10%) - higher is better:
+
+  DeepSeek      0.0 / 100
+
+RECOMMENDED DECISION: DeepSeek
+  Rationale: best weighted score, with accuracy of 92.0%, hallucination of 5.0%, average quality 9.41, latency 2.94s and average cost of US$ 0.000344 per request.
+
+Note: the 'No answer in the data' category is the main
+reliability indicator - high hallucination there disqualifies an
+AI for financial analysis, where making up numbers is unacceptable.
+======================================================================

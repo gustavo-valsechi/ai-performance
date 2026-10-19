@@ -1,0 +1,59 @@
+======================================================================
+AI PERFORMANCE REPORT - FINANCIAL ANALYSIS
+======================================================================
+Run window: 2026-10-13T21:53:35.526362  ->  2026-10-14T00:41:44.836362
+Runs per test: 20
+Providers tested: OpenAI, Gemini, DeepSeek
+
+## OVERALL METRICS (per provider)
+
+Provider     Accuracy   Hallucin.    Quality    Latency       Cost/req
+----------------------------------------------------------------------
+OpenAI          96.2%        3.8%       9.74      0.76s US$   0.000455
+Gemini         100.0%        0.0%      10.00      3.53s US$   0.001944
+DeepSeek        92.0%        5.0%       9.41      2.94s US$   0.000344
+
+## ACCURACY BY CATEGORY (%)
+
+Category                      OpenAI      Gemini    DeepSeek
+------------------------------------------------------------
+By category                   100.0%      100.0%      100.0%
+Insights and decision          81.2%      100.0%       75.0%
+No answer in the data         100.0%      100.0%      100.0%
+Totals and periods            100.0%      100.0%       88.8%
+Trend and comparison          100.0%      100.0%       96.2%
+
+## HALLUCINATION RATE BY CATEGORY (%)
+
+Category                      OpenAI      Gemini    DeepSeek
+------------------------------------------------------------
+By category                     0.0%        0.0%        0.0%
+Insights and decision          18.8%        0.0%       25.0%
+No answer in the data           0.0%        0.0%        0.0%
+Totals and periods              0.0%        0.0%        0.0%
+Trend and comparison            0.0%        0.0%        0.0%
+
+## BEST PER CRITERION
+
+  Highest accuracy ........ Gemini
+  Lowest hallucination .... Gemini
+  Best quality ............ Gemini
+  Lowest latency .......... OpenAI
+  Lowest cost ............. DeepSeek
+
+## INSIGHTS AND DECISION
+
+Weighted score (accuracy 35%, hallucination 25%, quality 20%,
+latency 10%, cost 10%) - higher is better:
+
+  Gemini       80.0 / 100
+  OpenAI       55.3 / 100
+  DeepSeek     12.1 / 100
+
+RECOMMENDED DECISION: Gemini
+  Rationale: best weighted score, with accuracy of 100.0%, hallucination of 0.0%, average quality 10.00, latency 3.53s and average cost of US$ 0.001944 per request.
+
+Note: the 'No answer in the data' category is the main
+reliability indicator - high hallucination there disqualifies an
+AI for financial analysis, where making up numbers is unacceptable.
+======================================================================
