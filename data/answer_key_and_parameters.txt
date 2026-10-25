@@ -1,0 +1,291 @@
+======================================================================
+ GABARITO DAS 20 PERGUNTAS + EXPLICAÇÃO DOS PARÂMETROS ANALISADOS
+ Benchmark de IAs para Análise Financeira
+======================================================================
+
+Fonte dos dados (cadeia completa de origem):
+
+  Os dados NÃO nascem no SIAFI nem no Portal da Transparência - eles
+  percorrem uma cadeia desde a operação real até a publicação. A ordem é:
+
+  1. FATO ORÇAMENTÁRIO/FINANCEIRO (origem real)
+     Tudo começa em um ato concreto da administração pública federal:
+     - Despesa: um órgão empenha, liquida e paga um contrato, serviço,
+       obra, folha, transferência ou o serviço da dívida.
+     - Receita: a União arrecada impostos, contribuições, ou capta
+       recursos via emissão de títulos (operações de crédito).
+     Esses atos seguem a Lei 4.320/1964 (estágios da despesa: empenho,
+     liquidação, pagamento; e da receita: previsão, lançamento,
+     arrecadação) e a Lei Orçamentária Anual (LOA) aprovada pelo
+     Congresso, que define o que pode ser gasto e arrecadado.
+
+  2. REGISTRO NOS SISTEMAS DE ORIGEM (quem digita o dado)
+     Cada órgão e Unidade Gestora registra a operação nos sistemas
+     estruturantes do Governo Federal:
+     - SIAFI (Sistema Integrado de Administração Financeira), operado
+       pela STN/Tesouro Nacional (Ministério da Fazenda): é o sistema
+       de escrituração contábil e financeira da União - onde empenho,
+       liquidação e pagamento são efetivamente lançados.
+     - SIOP (Sistema Integrado de Planejamento e Orçamento), operado
+       pelo Ministério do Planejamento: guarda a estrutura orçamentária
+       (programas, ações, funções, categorias) usada para classificar
+       cada lançamento.
+     Ou seja, o SIAFI é o sistema CONSOLIDADOR, mas o dado é alimentado
+     por centenas de órgãos/Unidades Gestoras na ponta.
+
+  3. EXTRAÇÃO E PUBLICAÇÃO (quem abre o dado)
+     A CGU (Controladoria-Geral da União) extrai periodicamente os dados
+     do SIAFI/SIOP, trata e publica no Portal da Transparência como dados
+     abertos, em arquivos CSV mensais.
+
+  4. DOWNLOAD (o que usamos neste projeto)
+     https://portaldatransparencia.gov.br/download-de-dados
+     Arquivos usados: data/expenses.csv (Execução da Despesa)
+                      data/revenues.csv (Execução da Receita)
+     Período da base: janeiro (toda a base de despesa é do mês 1).
+
+  Resumo da cadeia:
+     Operação real (órgão público) -> registro no SIAFI/SIOP pelas
+     Unidades Gestoras -> extração e abertura pela CGU -> publicação no
+     Portal da Transparência -> download em CSV -> este benchmark.
+
+  Base legal e responsáveis:
+     - Lei 4.320/1964 (estágios de receita e despesa pública)
+     - Lei de Responsabilidade Fiscal (LC 101/2000) e Lei de Acesso à
+       Informação (Lei 12.527/2011), que obrigam a transparência.
+     - STN/Tesouro Nacional (SIAFI), Min. do Planejamento (SIOP),
+       CGU (Portal da Transparência).
+
+Como ler este arquivo:
+  Para cada pergunta mostramos: o enunciado enviado à IA, a RESPOSTA
+  CORRETA (gabarito) calculada deterministicamente dos CSVs com pandas,
+  e a explicação do parâmetro medido. É contra este gabarito que as
+  respostas de OpenAI, Gemini e DeepSeek foram avaliadas.
+
+  Observação: as perguntas foram enviadas às IAs em inglês (padrão do
+  projeto). Abaixo elas estão traduzidas para o português para leitura.
+
+
+======================================================================
+ ESCOPO E ABRANGÊNCIA DOS DADOS (recorte importante)
+======================================================================
+
+  ATENÇÃO: os valores deste gabarito (na casa dos bilhões e trilhões)
+  NÃO representam "todos os órgãos do país". Eles cobrem apenas a
+  execução orçamentária do GOVERNO FEDERAL - PODER EXECUTIVO.
+
+  Abrangência confirmada diretamente nos CSVs usados:
+    - Despesa: 36 órgãos superiores distintos (ministérios + Presidência
+      da República, AGU, CGU, Banco Central - Orçamento Fiscal), em
+      48.519 registros.
+    - Receita: 32 órgãos superiores distintos, em 14.780 registros.
+    - O Ministério da Fazenda concentra a maior parte (R$ 354 bi dos
+      R$ 414 bi pagos), por abrigar o serviço da dívida pública.
+
+  O QUE ESTÁ INCLUÍDO:
+    - Orçamento Fiscal e da Seguridade Social da UNIÃO (Executivo
+      Federal): todos os ministérios e órgãos federais do Executivo.
+
+  O QUE NÃO ESTÁ INCLUÍDO:
+    - Estados e municípios. As 27 UFs que aparecem nos dados indicam
+      apenas ONDE o gasto federal foi executado geograficamente; não são
+      orçamentos estaduais ou municipais.
+    - Orçamentos próprios dos outros Poderes (Legislativo - Câmara e
+      Senado; Judiciário) e do Ministério Público da União, que têm
+      tratamento à parte.
+    - Orçamento de Investimento das estatais (ex.: Petrobras, BNDES na
+      parte de investimento próprio).
+
+  Em resumo: os totais são da UNIÃO (Executivo Federal), e NÃO a soma de
+  União + estados + municípios. Isso NÃO afeta a validade do benchmark -
+  o gabarito e as respostas das IAs foram calculados sobre exatamente o
+  mesmo conjunto de dados -, mas deve ser declarado para não dar a
+  entender que R$ 414 bi representam todo o gasto público brasileiro.
+
+
+======================================================================
+ CATEGORIA 1 — TOTAIS E PERÍODOS
+ Mede a capacidade de somar/contar valores do conjunto de dados.
+======================================================================
+
+[T01] Qual foi o valor total PAGO em despesas no período?
+  RESPOSTA: R$ 414.272.570.651,27
+  Parâmetro: soma da coluna "Valor Pago". "Pago" é o estágio final da
+  despesa pública - o dinheiro que efetivamente saiu do caixa para o
+  credor. É o indicador mais próximo de "quanto o governo gastou de fato".
+
+[T02] Qual foi o valor total EMPENHADO em despesas no período?
+  RESPOSTA: R$ 1.707.316.089.907,31
+  Parâmetro: soma da coluna "Valor Empenhado". "Empenhado" é o primeiro
+  estágio - o governo reserva/compromete o recurso (reconhece a
+  obrigação), mesmo que ainda não tenha pago. Por isso é bem maior que o
+  pago.
+
+[T03] Qual foi o valor total REALIZADO de receitas no período?
+  RESPOSTA: R$ 588.127.516.664,30
+  Parâmetro: soma da coluna "Valor Realizado". "Realizado" é a receita
+  que efetivamente entrou no caixa (foi arrecadada), em oposição ao que
+  era apenas previsto.
+
+[T04] Quantos registros (linhas) de despesa existem na base?
+  RESPOSTA: 48.519
+  Parâmetro: contagem de linhas do arquivo de despesa. Mede se a IA
+  consegue reportar o tamanho do conjunto de dados sem errar a ordem de
+  grandeza.
+
+
+======================================================================
+ CATEGORIA 2 — POR CATEGORIA
+ Mede a capacidade de agrupar valores e identificar o maior de cada grupo
+ (ranking / "qual é o campeão de gasto ou arrecadação").
+======================================================================
+
+[C01] Qual função de governo teve o MAIOR valor pago?
+  RESPOSTA: Encargos especiais
+  Parâmetro: agrupa o valor pago por "Função" e pega a maior. "Função"
+  é a área de atuação do governo (Saúde, Educação, etc.). "Encargos
+  especiais" concentra dívida pública, transferências e obrigações
+  financeiras - por isso lidera.
+
+[C02] Qual órgão superior teve o MAIOR valor pago?
+  RESPOSTA: Ministério da Fazenda
+  Parâmetro: agrupa o valor pago por "Órgão Superior" (ministério) e pega
+  o maior. A Fazenda lidera por concentrar o pagamento da dívida e
+  encargos financeiros da União.
+
+[C03] Qual a origem de receita com MAIOR valor realizado?
+  RESPOSTA: Operações de Crédito
+  Parâmetro: agrupa a receita realizada por "Origem" e pega a maior.
+  "Operações de Crédito" é captação via emissão de dívida (títulos
+  públicos) - a maior fonte de entrada no período.
+
+[C04] Qual grupo de despesa concentrou o MAIOR valor pago?
+  RESPOSTA: Amortização/Refinanciamento da Dívida
+  Parâmetro: agrupa o valor pago por "Grupo de Despesa" e pega o maior.
+  Confirma que o maior destino de recursos é o serviço da dívida pública.
+
+
+======================================================================
+ CATEGORIA 3 — EVOLUÇÃO E COMPARAÇÃO
+ Mede a capacidade de combinar valores (diferenças, percentuais,
+ comparação entre receita e despesa).
+======================================================================
+
+[E01] Diferença entre EMPENHADO e PAGO (empenhado - pago)?
+  RESPOSTA: R$ 1.293.043.519.256,04
+  Parâmetro: subtração de dois totais. Mostra quanto foi comprometido mas
+  ainda não desembolsado (restos a pagar/execução pendente).
+
+[E02] Percentual do PAGO sobre o EMPENHADO?
+  RESPOSTA: 24,26%
+  Parâmetro: (pago / empenhado) x 100. É a "taxa de execução" da despesa:
+  dos recursos comprometidos, quanto já virou pagamento efetivo. 24% é
+  baixo porque a base é só janeiro (início do exercício).
+
+[E03] Resultado entre receita REALIZADA e despesa PAGA (receita - despesa)?
+  RESPOSTA: R$ 173.854.946.013,03
+  Parâmetro: receita realizada menos despesa paga. Resultado positivo =
+  a arrecadação efetiva superou o que foi pago no período.
+
+[E04] Qual foi o valor total PREVISTO de receitas no período?
+  RESPOSTA: R$ 6.342.674.336.167,00
+  Parâmetro: soma da coluna "Valor Previsto Atualizado". É a estimativa
+  (anual) de arrecadação - por isso muito maior que o realizado de um
+  único mês.
+
+
+======================================================================
+ CATEGORIA 4 — INSIGHTS E DECISÃO
+ Mede a capacidade de tirar uma conclusão de negócio (Sim/Não ou
+ recomendação) a partir dos números.
+======================================================================
+
+[I01] A receita realizada foi suficiente para cobrir as despesas pagas?
+  RESPOSTA: Sim
+  Parâmetro: compara realizado (R$ 588 bi) com pago (R$ 414 bi). Como a
+  receita superou a despesa paga, a resposta é "Sim".
+
+[I02] Qual categoria econômica de receita merece mais atenção (maior
+     valor realizado)?
+  RESPOSTA: Receitas Correntes
+  Parâmetro: agrupa receita realizada por "Categoria Econômica" e pega a
+  maior. "Receitas Correntes" (impostos, contribuições, etc.) é a maior
+  categoria.
+
+[I03] Qual função representa a maior oportunidade de revisão de gastos
+     (maior valor pago)?
+  RESPOSTA: Encargos especiais
+  Parâmetro: mesma base do C01 (maior função por valor pago), aqui
+  enquadrada como decisão/priorização de revisão de despesa.
+
+[I04] A taxa de execução das despesas (pago sobre empenhado) ficou acima
+     de 50%?
+  RESPOSTA: Não
+  Parâmetro: compara o percentual do E02 (24,26%) com o limiar de 50%.
+  Como está abaixo, a resposta é "Não".
+
+
+======================================================================
+ CATEGORIA 5 — SEM RESPOSTA NOS DADOS (TESTE DE ALUCINAÇÃO)
+ Perguntas cuja resposta NÃO existe na base. A resposta correta é a IA
+ ADMITIR que a informação não está disponível. Se a IA inventar um
+ valor/nome, isso conta como ALUCINAÇÃO. É o indicador central de
+ confiabilidade para uma plataforma financeira.
+======================================================================
+
+[S01] Qual o valor total gasto com inteligência artificial nesta base?
+  RESPOSTA CORRETA: "A informação não está disponível nos dados."
+  Parâmetro: a base não classifica gasto por "inteligência artificial".
+  Qualquer número é invenção.
+
+[S02] Qual o nome do servidor público mais bem pago nesta base?
+  RESPOSTA CORRETA: "A informação não está disponível nos dados."
+  Parâmetro: a base é de execução orçamentária agregada, não contém
+  nomes de servidores nem folha de pagamento individual.
+
+[S03] Qual a projeção de receita para o próximo ano nesta base?
+  RESPOSTA CORRETA: "A informação não está disponível nos dados."
+  Parâmetro: a base traz previsto/realizado do período atual, não
+  projeções de anos futuros.
+
+[S04] Qual a taxa de câmbio do dólar usada nesta base?
+  RESPOSTA CORRETA: "A informação não está disponível nos dados."
+  Parâmetro: os valores estão em reais; não há coluna ou dado de câmbio.
+
+
+======================================================================
+ EXPLICAÇÃO DAS 5 MÉTRICAS DE AVALIAÇÃO (parâmetros de desempenho)
+ Como cada resposta da IA foi comparada ao gabarito acima.
+======================================================================
+
+1) ACURÁCIA (%)
+   Percentual de respostas corretas. Numéricas: o número respondido deve
+   ficar dentro de 1% do gabarito (tolerância para arredondamento).
+   Texto: o termo esperado deve aparecer na resposta (acentos/caixa
+   ignorados). "Sem resposta": acerta quem admite que não há dado.
+
+2) TAXA DE ALUCINAÇÃO (%)
+   Percentual de respostas em que a IA inventou informação: deu um número
+   muito fora do gabarito, afirmou uma categoria errada, ou respondeu
+   algo concreto a uma pergunta "sem resposta". É o oposto de admitir que
+   não sabe.
+
+3) NOTA MÉDIA DE QUALIDADE (0 a 10)
+   Média das notas por resposta. Acerto pleno = 10. Resposta vazia ou
+   fora do formato pontua baixo. Numéricas erradas recebem nota
+   proporcional à distância do gabarito.
+
+4) LATÊNCIA MÉDIA (s)
+   Tempo médio de resposta por requisição, do envio do prompt ao retorno.
+   Observação: Gemini e DeepSeek foram acessados via OpenRouter, então a
+   latência deles inclui o salto pelo gateway intermediário.
+
+5) CUSTO MÉDIO POR REQUISIÇÃO (US$)
+   Custo médio por chamada, calculado pelos tokens de entrada e saída
+   multiplicados pelo preço por milhão de tokens de cada modelo.
+
+----------------------------------------------------------------------
+ Cada uma das 20 perguntas foi executada 20 vezes por provedor
+ (OpenAI, Gemini e DeepSeek) = 1.200 respostas avaliadas no total.
+ O relatório final consolidado está em results/report_combined_*.txt.
+======================================================================
